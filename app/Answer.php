@@ -21,4 +21,17 @@ class Answer extends Model
         return Markdown::parse($this->body);
         
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        //Answerのオブジェクトが作成されるタイミングでキックされる処理
+        static::created(function($answer) {
+            $answer->question->increment('answers_count');
+            $answer->question->save();
+        });
+    }
+
+
 }
