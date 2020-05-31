@@ -25,7 +25,7 @@
                                     <strong>{{ $question->votes }}</strong> {{ Str::plural('vote', $question->votes) }}
                                 </div>                            
                                 <div class="status {{ $question->status }}">
-                                    <strong>{{ $question->answers }}</strong> {{ Str::plural('answer', $question->answers) }}
+                                    <strong>{{ $question->answers_count }}</strong> {{ Str::plural('answer', $question->answers_count) }}
                                 </div>                            
                                 <div class="view">
                                     {{ $question->views . " " . Str::plural('view', $question->views) }}
@@ -35,17 +35,16 @@
                                 <div class="d-flex align-items-center">
                                     <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
                                     <div class="ml-auto">
-                                        @if (Auth::user()->can('update-question', $question))
+                                            @if (Auth::user()->can('update', $question))
                                             <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
-                                        @endif
-
-                                        @if (Auth::user()->can('delete-question', $question))
+                                            @endif
+                                            @if(Auth::user()->can('delete', $question))
                                             <form class="form-delete" method="post" action="{{ route('questions.destroy', $question->id) }}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
                                             </form>
-                                        @endif
+                                            @endif
                                     </div>
                                 </div>
                                 <p class="lead">

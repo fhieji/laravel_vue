@@ -67,9 +67,7 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
-        if (\Gate::denies('update-question', $question)) {
-             abort(403, "Accenss denied");
-        }
+        $this->authorize("update, $question");
         return view('questions.edit', compact('question'));   
 
     }
@@ -83,9 +81,7 @@ class QuestionsController extends Controller
      */
     public function update(AskQuestionRequest $request, Question $question)
     {
-        if (\Gate::denies('update-question', $question)) {
-            abort(403, "Accenss denied");
-       }
+        $this->authorize("update", $question);
 
         $question->update($request->only('title', 'body'));
 
@@ -100,9 +96,7 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
-        if (\Gate::denies('delete-question', $question)) {
-            abort(403, "Accenss denied");
-       }
+       $this->authorize("delete", $question);
         $question->delete();
 
         return redirect('/questions')->with('success', "Your question has been deleted.");
