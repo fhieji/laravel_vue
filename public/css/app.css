@@ -11012,3 +11012,7 @@ form.form-delete {
   color: #ffc107;
 }
 
+.vote-controls.vote-accepted {
+  color: #28a745;
+}
+

@@ -8,6 +8,7 @@
                 <hr>
                 @include('layouts._messages')
                 @foreach ($question->answers as $answer )
+
                     <div class="media mt-2">
                         <div class="d-flex flex-column vote-controls">
                         <a title="This answer is useful" href="vote-up">
@@ -15,13 +16,31 @@
                         </a>
                         <span class="votes-count">1230</span>
                         <a title="This answer is not useful" href="vote-down off">
-                            <i class="fas fa-caret-down fa-3x"></i>
+                            <i class="fa fa-caret-down fa-3x"></i>
                         </a>
-                        <a title="Mark this answer as best answer" href="{{ $answer->status }} mt-2">
-                            <i class="fa-star"></i>
-                            <span class="fas fa-check fa-2x">1234</span>
+
+                        @can('accept', $answer)
+                        <a title="Mark this answer as best answer"
+                        class="{{ $answer->status }} mt-2"
+                        onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();"
+                        >
+                            <i class="fa fa-check" aria-hidden="true"></i>
                         </a>
+                        <form id="accept-answer-{{ $answer->id }}" action="{{ route('answers.accept', $answer->id) }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        @else
+                            @if ($answer->is_best)
+                            <a title="The question owner accepted this answer as best answer"
+                            class="{{ $answer->status }} mt-2"
+                            >
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </a>
+                            @endif
+                        @endcan
+                        
                     </div>
+
                         <div class="media-body">
                             {{  $answer->body  }}
                             <div class="row">
