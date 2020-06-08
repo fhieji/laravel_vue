@@ -11,13 +11,27 @@
 
                     <div class="media mt-2">
                         <div class="d-flex flex-column vote-controls">
-                        <a title="This answer is useful" href="vote-up">
-                            <i class="fas fa-caret-up fa-3x"></i>
-                        </a>
-                        <span class="votes-count">1230</span>
-                        <a title="This answer is not useful" href="vote-down off">
-                            <i class="fa fa-caret-down fa-3x"></i>
-                        </a>
+                            <a title="This Answer is useful" 
+                            class="vote-up {{ Auth::guest() ? 'off' : '' }}"
+                            onclick="event.preventDefault(); document.getElementById('up-vote-answer-{{ $answer->id }}').submit();">
+                                <i class="fas fa-caret-up fa-3x"></i>
+                            </a>
+                            <form id="up-vote-answer-{{ $answer->id }}" action="/answers/{{ $answer->id}}/vote" method="POST" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="vote" value="1">
+                            </form>
+
+                            <span class="votes-count">{{ $answer->votes_count }}</span>
+
+                            <a title="This Answer is not useful" 
+                            class="{{ Auth::guest() ? 'off' : '' }}"
+                            onclick="event.preventDefault(); document.getElementById('down-vote-answer-{{ $answer->id }}').submit();">
+                                <i class="fas fa-caret-down fa-3x"></i>
+                            </a>
+                            <form id="down-vote-answer-{{ $answer->id }}" action="/answers/{{ $answer->id}}/vote" method="POST" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="vote" value="-1">
+                            </form>
 
                         @can('accept', $answer)
                         <a title="Mark this answer as best answer"
