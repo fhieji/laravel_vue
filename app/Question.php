@@ -22,6 +22,11 @@ class Question extends Model
         $this->attributes['slug'] = Str::slug($value,'-','en');
     }
 
+    // public function setBodyAttribute($value)
+    // {
+    //     $this->attributes['body'] = clean($value);
+    // }
+
     public function getUrlAttribute()
     {
         return route("questions.show", $this->slug);
@@ -45,7 +50,7 @@ class Question extends Model
 
     public function getBodyHtmlAttribute()
     {
-        return Markdown::parse($this->body);
+        return $this->body;
     }
 
     public function answers()
