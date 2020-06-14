@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use App\User;
 use App\Question;
 
-class FavoritestableSeeder extends Seeder
+class FavoritesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
