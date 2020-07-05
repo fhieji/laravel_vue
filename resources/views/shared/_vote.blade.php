@@ -42,6 +42,6 @@
     @if ($model instanceof App\Question)
         <favorite :question="{{ $model }}"></favorite>
     @elseif ($model instanceof App\Answer)
-        <accept :answer="{{ $model }}"></accept>
+        <accepct :answer="{{ $model }}"></accepct>
     @endif
 </div>
