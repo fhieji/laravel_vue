@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import EventBus from '../event-bus';
 export default {
     props: ['answer'],
 
@@ -25,15 +26,23 @@ export default {
         }
     },
 
+    created ( ) {
+        EventBus.$on('accepted', id => {
+            this.isBEst = (id === this.id);
+        })
+    },
+
     methods: {
         create(){
             axios.post(`/answers/${this.id}/accept`)
             .then(res=> {
                 this.$toast.success(res.data.message, "Success", {
                     timeout: 3000,
-                    position: 'bottomleft'
+                    position: 'bottomLeft'
                 });
                 this.isBest = true;
+
+                EventBus.$emit('accepted', this.id);
             })
         }
     },

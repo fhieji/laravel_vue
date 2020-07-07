@@ -58,10 +58,16 @@ export default {
             .then(res => {                
                 this.editing = false;
                 this.body = res.data.body;
-                this.$toast.success(res.data.message, "Success", { timeout:3000});
+                this.$toast.success(res.data.message, "Success", { 
+                    timeout:3000,
+                    position: 'bottomLeft'
+                    });
             })
             .catch(err => {
-                this.$toast.error(err.response.data.message, "Error", { timeout:3000});
+                this.$toast.error(err.response.data.message, "Error", { 
+                    timeout:3000,
+                    position: 'bottomLeft'
+                    });
             });
         },        
         destroy () {
